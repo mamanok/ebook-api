@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AuthorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +15,14 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::get('/me', [AuthController::class, 'me']); 
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Route::get('me','App\Http\Controllers\AuthController@me');
+
+Route::get('authors','App\Http\Controllers\AuthorController@index');
+Route::post('authors','App\Http\Controllers\AuthorController@store');
+Route::get('authors/{id}','App\Http\Controllers\AuthorController@show');
+Route::put('authors/{id}','App\Http\Controllers\AuthorController@update');
+Route::delete('authors/{id}','App\Http\Controllers\AuthorController@destroy');
