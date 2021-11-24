@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +21,23 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('me','App\Http\Controllers\AuthController@me');
+//Routes Books
+Route::get('books','BookController@index');
+Route::post('books','BookController@store');
+Route::get('books/{id}','BookController@show');
+Route::put('books/{id}','BookController@update');
+Route::delete('books/{id}','BookController@destroy');
 
-Route::get('authors','App\Http\Controllers\AuthorController@index');
-Route::post('authors','App\Http\Controllers\AuthorController@store');
-Route::get('authors/{id}','App\Http\Controllers\AuthorController@show');
-Route::put('authors/{id}','App\Http\Controllers\AuthorController@update');
-Route::delete('authors/{id}','App\Http\Controllers\AuthorController@destroy');
+//Routes Author
+Route::get('authors','AuthorController@index');
+Route::post('authors','AuthorController@store');
+Route::get('authors/{id}','AuthorController@show');
+Route::put('authors/{id}','AuthorController@update');
+Route::delete('authors/{id}','AuthorController@destroy');
+
+// routes/api.php
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+
+

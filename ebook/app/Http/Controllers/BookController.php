@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Author;
+use App\Book;
 
-class AuthorController extends Controller
+class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,9 @@ class AuthorController extends Controller
         return [
             "status" => "200",
             "message" => "Load data success",
-            "data" => Author::all()
+            "data" => Book::all()
         ];
+
     }
 
     /**
@@ -39,20 +40,20 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Author::create([
-            "name"=> $request->name,
-            "date_of_birth"=> $request->date_of_birth,
-            "place_of_birth"=> $request->place_of_birth,
-            "gender"=> $request->gender,
-            "email"=> $request->email,
-            "hp"=> $request->hp,
+        $data = Book::create([
+            "title"=> $request->title,
+            "description"=> $request->description,
+            "author"=> $request->author,
+            "publisher"=> $request->publisher,
+            "date_of_issue"=> $request->date_of_issue,
         ]);
 
         return [
             "status" => "201",
-            "message" => "Create Data Success",
+            "message" => "Create data success",
             "data" => $data
         ];
+
     }
 
     /**
@@ -63,18 +64,22 @@ class AuthorController extends Controller
      */
     public function show($id)
     {
-        $data = Author::find($id);
+        $data = Book::find($id);
         if($data){
+
             return [
                 "status" => "200",
                 "message" => "Show Data Detail Success",
                 "data" => $data
             ];
+
         }else{
+
             return [
-                "status" => "404",
+                "status" => "201",
                 "message" => "Data Not Found",
             ];
+
         }
     }
 
@@ -86,7 +91,7 @@ class AuthorController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -98,14 +103,13 @@ class AuthorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Author::find($id);
+        $data = Book::find($id);
 
-        $data -> name = $request->name;
-        $data -> date_of_birth = $request->date_of_birth;
-        $data -> place_of_birth = $request->place_of_birth;
-        $data -> gender = $request->gender;
-        $data -> email = $request->email;
-        $data -> hp = $request->hp;
+        $data -> title = $request->title;
+        $data -> description= $request->description;
+        $data -> author = $request->author;
+        $data -> publisher = $request->publisher;
+        $data -> date_of_issue = $request->date_of_issue;
 
         $data->save();
 
@@ -120,7 +124,7 @@ class AuthorController extends Controller
      */
     public function destroy($id)
     {
-        $data = Author::find($id);
+        $data = Book::find($id);
 
         if($data){
             $data->delete();
@@ -135,4 +139,5 @@ class AuthorController extends Controller
             ];
         }
     }
+
 }
